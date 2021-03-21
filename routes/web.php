@@ -11,10 +11,16 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('home', 'HomeController@index')->name('home');
+
+//リスト一覧表示
+Route::get('/', 'BookmarkController@index')->name('bookmarks.index');
+
+//詳細ページ表示
+Route::get('bookmarks/{bookmark}', 'BookmarkController@show')->name('bookmarks.show');
