@@ -14,7 +14,9 @@ class BookmarkController extends Controller
      */
     public function index()
     {
-        //
+        $bookmarks = Bookmark::paginate(20);
+
+        return view('bookmarks.index', compact('bookmarks'));
     }
 
     /**
@@ -46,7 +48,8 @@ class BookmarkController extends Controller
      */
     public function show(Bookmark $bookmark)
     {
-        //
+        // $bookmark = Bookmark::findOrFail($id);
+        return view('bookmarks.details', compact('bookmark'));
     }
 
     /**
