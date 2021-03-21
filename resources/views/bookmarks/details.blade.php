@@ -25,6 +25,7 @@
                       <td>{{$bookmark->created_at->format('y年m月d日')}}</td>
                     </tr>
                   </table>
+                  <a href="{{route('bookmarks.edit', $bookmark)}}"><button class="btn btn-success">編集する</button></a>
                 </div>
           </div>
       </div>
