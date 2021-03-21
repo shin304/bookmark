@@ -11,21 +11,9 @@
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
-
 Auth::routes();
 
-Route::get('home', 'HomeController@index')->name('home');
-
-// // リスト一覧画面表示
-// Route::get('/', 'BookmarkController@index')->name('bookmarks.index');
-
-// // 詳細画面表示
-// Route::get('bookmarks/{bookmark}', 'BookmarkController@show')->name('bookmarks.show');
-
-// // 登録画面表示
-// Route::post('bookmarks/create', 'BookmarkController@create')->name('bookmarks.create');
-
-Route::resource('bookmarks', 'BookmarkController');
+Route::group(['middleware' => 'auth'], function () {
+  Route::get('/', 'BookmarkController@index');
+  Route::resource('bookmarks', 'BookmarkController');
+});
