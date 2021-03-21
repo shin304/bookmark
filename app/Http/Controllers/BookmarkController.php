@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Bookmark;
 use Illuminate\Http\Request;
+use App\Http\Requests\BookmarkRequest;
 
 class BookmarkController extends Controller
 {
@@ -14,7 +15,7 @@ class BookmarkController extends Controller
      */
     public function index()
     {
-        $bookmarks = Bookmark::paginate(20);
+        $bookmarks = Bookmark::orderBy('id', 'desc')->paginate(20);
 
         return view('bookmarks.index', compact('bookmarks'));
     }
@@ -26,7 +27,7 @@ class BookmarkController extends Controller
      */
     public function create()
     {
-        //
+        return view('bookmarks.create');
     }
 
     /**
@@ -35,9 +36,14 @@ class BookmarkController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(BookmarkRequest $request)
     {
-        //
+        $input = $request->all();
+
+        Bookmark::create($input);
+
+        return redirect()->route('bookmarks.index')
+                ->with('status', 'ブックマークを登録しました。');
     }
 
     /**
@@ -60,7 +66,8 @@ class BookmarkController extends Controller
      */
     public function edit(Bookmark $bookmark)
     {
-        //
+        // $bookmark = Bookmark::findOrFail($bookmark);
+        return view('bookmarks.edit', compact('bookmark'));
     }
 
     /**
@@ -70,9 +77,13 @@ class BookmarkController extends Controller
      * @param  \App\Models\Bookmark  $bookmark
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Bookmark $bookmark)
+    public function update(BookmarkRequest $request, Bookmark $bookmark)
     {
-        //
+        $input = $request->all();
+        $bookmark->update($input);
+        
+        return redirect()->route('bookmarks.show', compact('bookmark'))
+                ->with('status', 'ブックマークを更新しました。');;
     }
 
     /**
@@ -83,6 +94,8 @@ class BookmarkController extends Controller
      */
     public function destroy(Bookmark $bookmark)
     {
-        //
+        $bookmark->delete();
+        return redirect()->route('bookmarks.index')
+                ->with('status', 'ブックマークを削除しました。');
     }
 }

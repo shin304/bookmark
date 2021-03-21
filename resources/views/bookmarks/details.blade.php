@@ -7,6 +7,7 @@
           <div class="card">
               <div class="card-header">ブックマーク詳細</div>
                 <div class="card-body">
+                  @include('components.alert')
                   <table class="table">
                     <tr>
                       <th class='w-25'>タイトル</th>
@@ -25,6 +26,8 @@
                       <td>{{$bookmark->created_at->format('y年m月d日')}}</td>
                     </tr>
                   </table>
+                  <a href="{{route('bookmarks.edit', $bookmark)}}"><button class="btn btn-success">編集する</button></a>
+                  <a class="btn btn-secondary" href=" {{ route('bookmarks.index') }} ">一覧に戻る</a>
                 </div>
           </div>
       </div>
